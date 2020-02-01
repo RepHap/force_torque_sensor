@@ -21,6 +21,7 @@ bool ForceTorqueSensorSim::init() {
 
 bool ForceTorqueSensorSim::initCommunication(int type, std::string path, int baudrate, int base_identifier) {
     std::cout<<"ForceTorqueSensorSim"<<std::endl;
+    return true;
 }
 
 void ForceTorqueSensorSim::subscribeData(const geometry_msgs::Twist::ConstPtr& msg){
@@ -46,6 +47,7 @@ bool ForceTorqueSensorSim::readFTData(int statusCode, double& Fx, double& Fy, do
 
 bool ForceTorqueSensorSim::readDiagnosticADCVoltages(int index, short int& value){
     std::cout<<"ForceTorqueSensorSim"<<std::endl;
+    return true;
 }
 
 PLUGINLIB_EXPORT_CLASS(force_torque_sensor::ForceTorqueSensorSim, hardware_interface::ForceTorqueSensorHW)

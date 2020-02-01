@@ -34,6 +34,8 @@ else()
   set(Eigen3_LIBRARIES ${EIGEN3_LIBRARIES})
 endif()
 
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" Cpp11CompilerFlag)
 if (${Cpp11CompilerFlag})

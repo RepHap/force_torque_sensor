@@ -45,6 +45,12 @@
 
 #include <pluginlib/class_loader.h>
 
+#ifdef _WIN32
+#include <chrono>
+#include <thread>
+#define usleep(usec) (std::this_thread::sleep_for(std::chrono::microseconds(usec)))
+#endif // _WIN32
+
 using namespace force_torque_sensor;
 
 ForceTorqueSensorHandle::ForceTorqueSensorHandle(ros::NodeHandle& nh, hardware_interface::ForceTorqueSensorHW *sensor, std::string sensor_name, std::string output_frame) :
@@ -109,7 +115,7 @@ void ForceTorqueSensorHandle::prepareNode(std::string output_frame)
         calibrationNMeasurements = 20;
     }
     else {
-        calibrationNMeasurements = (uint)calibNMeas;
+        calibrationNMeasurements = (unsigned int)calibNMeas;
     }
     calibrationTBetween = calibration_params_.T_between_meas;
     m_staticCalibration = calibration_params_.isStatic;
@@ -250,7 +256,7 @@ void ForceTorqueSensorHandle::init_sensor(std::string& msg, bool& success)
             {
                 ROS_INFO("Calibrating sensor. Plase wait...");
                 geometry_msgs::Wrench temp_offset;
-                if (not calibrate(true, &temp_offset))
+                if (!calibrate(true, &temp_offset))
                 {
                     success = false;
                     msg = "Calibration failed! :/";
@@ -396,7 +402,7 @@ bool ForceTorqueSensorHandle::calibrate(bool apply_after_calculation, geometry_m
     return m_isCalibrated;
 }
 
-geometry_msgs::Wrench ForceTorqueSensorHandle::makeAverageMeasurement(uint number_of_measurements, double time_between_meas, std::string frame_id)
+geometry_msgs::Wrench ForceTorqueSensorHandle::makeAverageMeasurement(unsigned int number_of_measurements, double time_between_meas, std::string frame_id)
 {
     geometry_msgs::Wrench measurement;
     int num_of_errors = 0;
@@ -406,7 +412,7 @@ geometry_msgs::Wrench ForceTorqueSensorHandle::makeAverageMeasurement(uint numbe
       geometry_msgs::Wrench output;
       //std::cout<<"frame id"<< frame_id<<std::endl;
       if (frame_id.compare("") != 0) {
-      if (not transform_wrench(frame_id, sensor_frame_, moving_mean_filtered_wrench.wrench, output))
+      if (!transform_wrench(frame_id, sensor_frame_, moving_mean_filtered_wrench.wrench, output))
       {
 	  num_of_errors++;
 	  if (num_of_errors > 200){

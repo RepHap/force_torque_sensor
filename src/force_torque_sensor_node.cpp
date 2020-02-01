@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 
     node_params_.fromParamServer();
 
-    new force_torque_sensor::ForceTorqueSensorHandle(nh, node_params_.sensor_frame,node_params_.transform_frame);
+    force_torque_sensor::ForceTorqueSensorHandle *handle = new force_torque_sensor::ForceTorqueSensorHandle(nh, node_params_.sensor_frame,node_params_.transform_frame);
 
     ROS_INFO("ForceTorque Sensor Node running.");
 

@@ -69,7 +69,7 @@ typedef unsigned char uint8_t;
 
 
 #include <iirob_filters/gravity_compensation.h>
-#include <iirob_filters/GravityCompensationParameters.h>
+// #include <iirob_filters/GravityCompensationParameters.h>
 #include <iirob_filters/low_pass_filter.h>
 #include <iirob_filters/threshold_filter.h>
 #include <iirob_filters/moving_mean_filter.h>
@@ -119,7 +119,7 @@ public:
 
 private:
   void updateFTData(const ros::TimerEvent &event);
-  geometry_msgs::Wrench makeAverageMeasurement(uint number_of_measurements, double time_between_meas, std::string frame_id="");
+  geometry_msgs::Wrench makeAverageMeasurement(unsigned int number_of_measurements, double time_between_meas, std::string frame_id="");
 
   bool transform_wrench(std::string goal_frame, std::string source_frame, geometry_msgs::Wrench wrench, geometry_msgs::Wrench& transformed);
 
@@ -165,7 +165,7 @@ private:
   bool is_pub_low_pass_ = false;
   bool is_pub_moving_mean_ = false;
 
-  uint _num_transform_errors;
+  unsigned int _num_transform_errors;
 
   // HWComm parameters
   int HWCommType; // Only important if can is used
@@ -173,7 +173,7 @@ private:
   int HWCommBaudrate;
   int ftsBaseID;
   double nodePubFreq, nodePullFreq;
-  uint calibrationNMeasurements;
+  unsigned int calibrationNMeasurements;
   double calibrationTBetween;
   int coordinateSystemNMeasurements;
   int coordinateSystemTBetween;
